@@ -1,0 +1,31 @@
+vector<int> leftView(Node *root)
+{
+    if(root == nullptr)
+    return {};
+   vector<int> ans;
+   queue<Node*> q;
+   int count = 1;
+   q.push(root);
+   count++;
+   ans.push_back(root->data);
+   while(!q.empty())
+   {
+       root = q.front();
+       q.pop();
+       count--;
+       if(count == 0)
+       {
+           ans.push_back(root->data);
+           count = q.size()+1;
+       }
+       if(root->left)
+       {
+           q.push(root->left);
+       }
+       if(root->right)
+       {
+           q.push(root->right);
+       }
+   }
+   return ans;
+}
