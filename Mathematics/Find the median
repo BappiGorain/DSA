@@ -1,0 +1,13 @@
+Given an array arr[] of N integers, calculate the median.
+
+int find_median(vector<int> v)
+		{
+		    int l=v.size();
+          sort(v.begin(),v.end());
+          if(l%2==0){
+              return (v[(l/2)-1]+v[(l/2)])/2;
+          }
+          else {
+              return v[l/2];
+          }
+		}
