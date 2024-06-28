@@ -1,0 +1,25 @@
+Given two strings 'str1' and 'str2', check if these two strings are isomorphic to each other.
+
+If the characters in str1 can be changed to get str2, then two strings, str1 and str2, are isomorphic.
+A character must be completely swapped out for another character while maintaining the order of the characters.
+A character may map to itself, but no two characters may map to the same character.
+
+if(s1.size() != s2.size())
+        return 0;
+        
+        map<char,char>m1,m2;
+        
+        for(int i=0; i<s1.size(); i++){
+            
+            if(m1[s1[i]]==0&&m2[s2[i]]==0)
+            {
+                
+                m1[s1[i]]=s2[i];
+                m2[s2[i]]=s1[i];
+            }
+            
+            if(m1[s1[i]]!=s2[i] && m2[s2[i]] != s1[i])
+            return 0;
+        }
+        
+        return 1;
