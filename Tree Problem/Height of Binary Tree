@@ -1,0 +1,14 @@
+Given a binary tree, find its height.
+
+
+int height(struct Node* node)
+    {
+        if(node == NULL)
+        {
+            return 0;
+        }
+        int ls = height(node->left);
+        int rs = height(node->right);
+        
+        return 1 + max(ls,rs);
+    }
