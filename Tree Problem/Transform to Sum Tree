@@ -1,0 +1,29 @@
+Given a Binary Tree of size N , where each node can have positive or negative values. 
+Convert this to a tree where each node contains the sum of the left and right sub trees of the original tree.
+The values of leaf nodes are changed to 0.
+
+
+private:
+    int solve(Node *root)
+    {
+        if(root == nullptr)
+        {
+            return 0; 
+        }
+        else
+        {
+            int old_val = root->data;
+            int left_sum = solve(root->left);
+            int right_sum = solve(root->right);
+            root->data = left_sum + right_sum;
+            return old_val + left_sum + right_sum;
+        }
+    }
+  public:
+  
+    // Convert a given tree to a tree where every node contains sum of values of
+    // nodes in left and right subtrees in the original tree
+    void toSumTree(Node *node)
+    {
+        solve(node);
+    }
