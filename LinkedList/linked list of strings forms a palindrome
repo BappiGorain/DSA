@@ -1,0 +1,19 @@
+Given a linked list with string data, check whether the combined string formed is palindrome.
+If the combined string is palindrome then return true otherwise return false.
+
+bool compute(Node* head)
+    {
+        string s = "";
+        while(head)
+        {
+            s = s + head->data;
+            head = head->next;
+        }
+        int n = s.length();
+        for(int i=0;i<n/2;i++)
+        {
+            if(s[i] != s[n-i-1])
+                return false;
+        }
+        return true;
+    }
