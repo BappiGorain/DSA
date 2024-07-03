@@ -1,0 +1,34 @@
+Given a Binary Tree. Return true if, for every node X in the tree other than the leaves, 
+its value is equal to the sum of its left subtree's value and its right subtree's value. 
+Else return false.
+
+An empty tree is also a Sum Tree as the sum of an empty tree can be considered to be 0.
+A leaf node is also considered a Sum Tree.
+
+
+
+
+int fun(Node *root, bool &ans)
+    {
+        if(root==nullptr) return 0;
+        if(root->left == nullptr and root->right == nullptr)
+        {
+            return root->data;
+        }
+        int ls = fun(root->left,ans);
+        int rs = fun(root->right,ans);
+        
+        if(root->data != ls + rs)
+        {
+            ans = false;
+        }
+        return root->data + ls + rs;
+    }
+    
+    public:
+    bool isSumTree(Node* root)
+    {
+        bool ans = true;
+        fun(root,ans);
+        return ans;
+    }
