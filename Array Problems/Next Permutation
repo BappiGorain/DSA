@@ -22,38 +22,9 @@ Expected Time Complexity: O(N)
 Expected Auxiliary Space: O(1)
 
 
-
  vector<int> nextPermutation(int n, vector<int> arr){
-
-
-        // cheak if the array is largest permutation or not
-
-        bool flag = true;
         
-        for(int i=0;i<n-1;i++)
-        {
-            if(arr[i] < arr[i+1])
-            {
-                flag = false;
-                break;
-            }
-        }
-        
-        if(flag)
-        {
-            for(int i=0;i<n/2;i++)
-            {
-                swap(arr[i],arr[n-i-1]);
-            }
-            return arr;
-        }
-
-
-
-      // if array is not largest permutation
-        
-        
-        int pos = 0;
+        int pos = -1;
         
         for(int i=n-2;i>=0;i--)
         {
@@ -62,6 +33,11 @@ Expected Auxiliary Space: O(1)
                 pos = i;
                 break;
             }
+        }
+        if(pos == -1)
+        {
+            reverse(arr.begin(), arr.end());
+            return arr;
         }
         
         for(int i=n-1;i>=0;i--)
