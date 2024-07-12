@@ -1,0 +1,28 @@
+Given a binary tree and an integer target, check whether there is a root-to-leaf path with its sum as target.
+
+
+
+void helper(Node* root, int s, int sum, bool &res){
+        
+        if(root == NULL) return;
+        
+        sum += root->data;
+        
+        if(s == sum) {
+            //Checking that when we reach sum, then we should be at a leaf
+            if(!root->left && !root->right) res = true;
+        }
+        
+        helper(root->left, s, sum, res);
+        helper(root->right, s, sum , res);
+        
+        
+    }
+    
+    bool hasPathSum(Node *root, int s) {
+    // Your code here
+        bool res = false;
+        int sum = 0;
+        helper(root, s, sum, res);
+        return res;
+}
