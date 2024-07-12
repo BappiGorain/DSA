@@ -1,0 +1,22 @@
+Given an array of size n-1 such that it only contains distinct integers in the range of 1 to n. Return the missing element
+
+int missingNumber(int n, vector<int>& arr)
+    {
+        int j=0;
+        for(int i=0;i<n-1;i++)
+        {
+            int ci = arr[i]-1;
+            while(arr[j]<n and arr[j] != arr[ci])
+            {
+                swap(arr[j],arr[ci]); 
+                ci = arr[j]-1;
+            }
+            j++;
+        }
+        
+        for(int i=0;i<n-1;i++)
+        {
+            if(arr[i]!=i+1) return i+1;
+        }
+        return n;
+    }
