@@ -2,7 +2,7 @@
 Data Structure and Algorithm
 
 
-Here I upload all the problems I do from different online platform like geeksforgeeks,coding ninja, hacker rank.
+Here I upload all the problems I do from different online platforms like geeksforgeeks,coding ninja, hacker rank.
 
 You can visit my geeksforgeeks profile using below link 
 
