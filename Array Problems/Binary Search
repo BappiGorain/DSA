@@ -1,0 +1,29 @@
+Given a sorted array arr and an integer k, find the position(0-based indexing) at which k is present in the array using binary search.
+If not present then return -1;
+
+
+
+
+int binarysearch(vector<int> &arr, int k)
+    {
+        
+        int low = 0;
+        int high = arr.size()-1;
+        while(low<=high)
+        {
+            int mid = low + (high-low)/2;
+            if(arr[mid] == k)
+            {
+                return mid;
+            }
+            else if(arr[mid] < k)
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
+            }
+        }
+        return -1;
+    }
