@@ -1,0 +1,45 @@
+Given an adjacency list for a Directed Acyclic Graph (DAG) where adj_list[i] contains a list of all vertices j 
+such that there is a directed edge from vertex i to vertex j, with  V  vertices and E  edges, 
+your task is to find any valid topological sorting of the graph.
+
+ 
+In a topological sort, for every directed edge u -> v,  u must come before v in the ordering.
+
+
+
+vector<int> topoSort(int V, vector<int> adj[]) 
+	{
+	    vector<int> in(V,0);
+	    for(int i=0;i<V;i++)
+	    {
+	        for(int j=0;j<adj[i].size();j++)
+	        {
+	            in[adj[i][j]]++;
+	        }
+	    }
+	    queue<int> q;
+	    vector<int> topo;
+	    for(int i=0;i<V;i++)
+	    {
+	        if(in[i] == 0)
+	        {
+	            q.push(i);
+	        }
+	    }
+	    
+	    while(!q.empty())
+	    {
+	        int node = q.front();
+	        q.pop();
+	        topo.push_back(node);
+	        for(int it: adj[node])
+	        {
+	            in[it]--;
+	            if(in[it] == 0)
+	            {
+	                q.push(it);
+	            }
+	        }
+	    }
+	    return topo;
+	}
