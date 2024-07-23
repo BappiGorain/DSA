@@ -1,0 +1,29 @@
+You are given a stack St. You have to reverse the stack using recursion.
+
+
+void Reverse(stack<int> &St)
+    {
+        if(St.empty())
+        {
+            return;
+        }
+        
+        int ele = St.top();
+        St.pop();
+        Reverse(St);
+        insertAtBottom(St,ele);
+    }
+    
+    
+    void insertAtBottom(stack<int> &St, int ele)
+    {
+        if(St.empty())
+        {
+            St.push(ele);
+            return;
+        }
+        int temp = St.top();
+        St.pop();
+        insertAtBottom(St,ele);
+        St.push(temp);
+    }
