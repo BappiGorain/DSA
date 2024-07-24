@@ -1,0 +1,91 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+
+vector<int> multiply(vector<int> arr, int num)
+{
+    vector<int> answer;
+    int carry = 0;
+    for(int i=arr.size()-1;i>=0;i--)
+    {
+        int mult = (arr[i] * num) + carry;
+        int ans = mult % 10;
+        carry = mult / 10;
+        answer.push_back(ans);
+    }
+
+    while(carry > 0)
+    {
+        answer.push_back(carry%10);
+        carry = carry / 10;
+    }
+    
+    reverse(answer.begin(),answer.end());
+
+    return answer;
+}
+
+
+vector<int> add(vector<int> first,vector<int> second)
+{
+    int n = first.size()-1;
+    int m = second.size()-1;
+    int carry = 0;
+    vector<int> result;
+
+    while(n>=0 and m>=0)
+    {
+        int sum = first[n] + second[m] + carry;
+        int ans = sum % 10;
+        carry = sum / 10;
+        result.push_back(ans);
+        n--;
+        m--;
+    }
+
+    while(n>=0 )
+    {
+        int sum = first[n] + carry;
+        int ans = sum % 10;
+        carry = sum / 10;
+        result.push_back(ans);
+        n--;
+    }
+
+    while( m>=0)
+    {
+        int sum = second[m] + carry;
+        int ans = sum % 10;
+        carry = sum / 10;
+        result.push_back(ans);
+        m--;
+    }
+
+    while(carry>0)
+    {
+        result.push_back(carry%10);
+        carry = carry/10;
+    }
+
+    reverse(result.begin(),result.end());
+
+    return result;
+}
+
+int main()
+{
+
+    int n = 100;
+
+    vector<int> result = {1};
+    
+    for(int i=1;i<=n;i++)
+    {
+        result = multiply(result,i);
+    }
+
+    for(auto it: result)
+    {
+        cout<<it;
+    }
+}
