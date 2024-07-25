@@ -1,0 +1,50 @@
+Given a linked list, you have to perform the following task:
+
+Extract the alternative nodes starting from second node.
+Reverse the extracted list.
+Append the extracted list at the end of the original list.
+Note: Try to solve the problem without using any extra memory.
+
+
+Node *reverse(Node *head)
+    {
+        Node *current = head;
+        Node *previous = NULL;
+        while(current != NULL)
+        {
+            Node *nextNode = current->next;
+            current->next = previous;
+            previous = current;
+            current = nextNode;
+        }
+        return previous;
+    }
+    
+    
+    void rearrange(struct Node *odd)
+    {
+        
+        if(odd->next == NULL)
+        {
+            return;
+        }
+
+        Node *curr1 = odd;
+        Node *curr2 = odd->next;
+        Node *temp = curr2;
+        
+        while(curr1 != NULL and curr1->next != NULL and curr2 != NULL and curr2->next != NULL)
+        {
+            curr1->next = curr2->next;
+            curr1 = curr2->next;
+            
+            if(curr2->next->next != NULL)
+            {
+                curr2->next = curr1->next;
+                curr2 = curr1->next;
+            }
+        }
+        curr2->next = NULL;
+        Node *rev= reverse(temp);
+        curr1->next = rev;
+    }
