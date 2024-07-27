@@ -1,0 +1,66 @@
+Given two singly linked lists, return the point where two linked lists intersect.
+
+Note: If the linked lists do not merge at any point, return -1.
+
+Input: Linked list 1: 4->1->8->4->5, Linked List 2: 5->6->1->8->4->5
+
+Output: 8
+Explanation: From the above image, it is clearly seen that the common part is 8->4->5 whose starting point is 8.
+
+
+int intersectPoint(Node* head1, Node* head2)
+{
+    Node *h1 = head1;
+    Node *h2 = head2;
+    int c1 = 0;
+    int c2 = 0;
+    
+    while(h1 and h2)
+    {
+        c1++;
+        c2++;
+        h1=h1->next;
+        h2=h2->next;
+    }
+    while(h1)
+    {
+        c1++;
+        h1=h1->next;
+    }
+    
+    while(h2)
+    {
+        c2++;
+        h2=h2->next;
+    }
+    
+    int diff = abs(c1-c2);
+    
+    if(c1>c2)
+    {
+        for(int i=1;i<=diff;i++)
+        {
+            head1 = head1->next;
+        }
+    }
+    else
+    {
+        for(int i=1;i<=diff;i++)
+        {
+            head2 = head2->next;
+        }
+    }
+    
+    while(head1 and head2)
+    {
+        if(head1 == head2)
+        {
+            return head1->data;
+        }
+        head1 = head1->next;
+        head2 = head2->next;
+        
+    }
+    return -1;
+    
+}
