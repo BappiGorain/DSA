@@ -1,0 +1,21 @@
+Given an array of strings arr. Return the longest common prefix among all strings present in the array. If there's no prefix common in all the strings, return "-1".
+
+Examples :
+
+Input: arr[] = ["geeksforgeeks", "geeks", "geek", "geezer"]
+Output: gee
+Explanation: "gee" is the longest common prefix in all the given strings.
+
+
+
+string longestCommonPrefix(vector<string> arr) {
+        int n=arr.size();
+        sort (arr.begin(),arr.end());
+        string ans="";
+        for (int i=0;i<min(arr[0].size(),arr[n-1].size());i++)
+        {
+            if (arr[0][i]!=arr[n-1][i]) break;
+            ans+=arr[0][i];
+        }
+        return ans==""?"-1":ans;
+    }
