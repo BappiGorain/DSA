@@ -1,0 +1,37 @@
+Given an array of integers cost[] of length N, where cost[i] is the cost of the ith step on a staircase. Once the cost is paid, you can either climb one or two steps.
+You can either start from the step with index 0, or the step with index 1.
+Return the minimum cost to reach the top of the floor.
+
+Example 1:
+
+Input:
+N = 3
+cost[] = {10, 15, 20}
+Output:
+15
+
+
+
+
+
+int solve(int idx,int n,vector<int> &cost,vector<int> &dp)
+    {
+        if(idx==n) return 0;
+        
+        if(dp[idx]!=-1) return dp[idx];
+        int oneStep = cost[idx] + solve(idx+1,n,cost,dp);
+        
+        int twoStep =  INT_MAX;
+        if(idx < n)
+        twoStep = cost[idx] + solve(idx+2,n,cost,dp);
+        return dp[idx] = min(oneStep,twoStep);
+    }
+  
+  
+    int minCostClimbingStairs(vector<int>&cost ,int N)
+    {
+        vector<int> dp(N,-1);
+        int ans1 = solve(0,N,cost,dp);
+        int ans2 = solve(1,N,cost,dp);
+        return min(ans1,ans2);
+    }
