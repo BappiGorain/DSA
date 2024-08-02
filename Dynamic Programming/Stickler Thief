@@ -1,0 +1,31 @@
+Stickler the thief wants to loot money from a society having n houses in a single line. He is a weird person and follows a certain rule when looting the houses. According to the rule, he will never loot two consecutive houses. At the same time, he wants to maximize the amount he loots. The thief knows which house has what amount of money but is unable to come up with an optimal looting strategy. He asks for your help to find the maximum money he can get if he strictly follows the rule. ith house has a[i] amount of money present in it.
+
+Example 1:
+
+Input:
+n = 5
+a[] = {6,5,5,7,4}
+Output: 
+15
+Explanation: 
+Maximum amount he can get by looting 1st, 3rd and 5th house. Which is 6+5+4=15.
+
+
+
+
+int solve(int i,int arr[],vector<int> &dp)
+    {
+        if(i == 0) return arr[i];
+        if(i<0) return 0;
+        if(dp[i] != -1) return dp[i];
+        int pick = arr[i] + solve(i-2,arr,dp);
+        int non_pick = 0 + solve(i-1,arr,dp);
+        return dp[i] = max(pick,non_pick);
+    }
+    
+    int FindMaxSum(int arr[], int n)
+    {
+        vector<int> dp(n,-1);
+        return solve(n-1,arr,dp);
+    }
+};
