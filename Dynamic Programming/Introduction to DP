@@ -1,0 +1,48 @@
+Geek is learning data structures, and he recently learned about the top-down and bottom-up dynamic programming approaches. Geek is having trouble telling them apart from one another.
+
+When given an integer n, where n is based on a 0-based index, find the nth Fibonacci number.
+
+Every ith number in the series equals the sum of the (i-1)th and (i-2)th numbers, where the first and second numbers are specified as 0 and 1, respectively.
+
+For the given issue, code both top-down and bottom-up approaches.
+
+Note : As the answer might be large, return the final answer modulo 109 + 7
+
+Example 1:
+
+Input:
+n = 5
+Output: 5
+Explanation: 0,1,1,2,3,5 as we can see 5th number is 5.
+
+
+
+long long int solve(int i, vector<long long int> &dp)
+  {
+      if(i<=1) return i;
+      if(dp[i]!= -1) return dp[i];
+      return dp[i]= (solve(i-1,dp) + solve(i-2,dp))% 1000000007;
+  }
+    long long int topDown(int n)
+    {
+        vector<long long int> dp(n+1,-1);
+        return solve(n,dp) % 1000000007;
+        
+    }
+    long long int bottomUp(int n)
+    {
+        if(n<=1)
+        {
+            return n;
+        }  
+        long long int f = 0;
+        long long int s = 1;
+        long long int ans =1;
+        for(int i=2;i<=n;i++)
+        {
+            ans = (f + s)% 1000000007;
+            f = s;
+            s = ans;
+        }
+        return ans % 1000000007;
+    }
