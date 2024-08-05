@@ -1,0 +1,40 @@
+Given a binary tree, return an array where elements represent the bottom view of the binary tree from left to right.
+
+Note: If there are multiple bottom-most nodes for a horizontal distance from the root, then the latter one in the level
+traversal is considered. For example, in the below diagram, 3 and 4 are both the bottommost nodes at a horizontal distance of 0,
+here 4 will be considered.
+
+
+
+
+vector <int> bottomView(Node *root)
+    {
+        queue<pair<Node*,int>> q;
+        map<int,int> mpp;
+        q.push({root,0});
+        while(!q.empty())
+        {
+            root = q.front().first;
+            int level = q.front().second;
+            q.pop();
+            
+            mpp[level] = root->data; 
+            
+            if(root->left != NULL)
+            {
+                q.push({root->left,level-1});
+            }
+            
+            if(root->right != NULL)
+            {
+                q.push({root->right,level+1});
+            }
+        }
+        vector<int> ans;
+        for(auto it: mpp)
+        {
+            ans.push_back(it.second);
+        }
+        return ans;
+        
+    }
