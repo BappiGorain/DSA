@@ -1,0 +1,47 @@
+Given an array arr[] of size N, check if it can be partitioned into two parts such that the sum of elements in both parts is the same.
+
+Example 1:
+
+Input: N = 4
+arr = {1, 5, 11, 5}
+Output: YES
+Explanation: 
+The two parts are {1, 5, 5} and {11}.
+Example 2:
+
+Input: N = 3
+arr = {1, 3, 5}
+Output: NO
+Explanation: This array can never be 
+partitioned into two such parts.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                              int equalPartition(int n, int arr[])
+                                                                  {
+                                                                      int sum = 0;
+                                                                      for(int i=0;i<n;i++) sum+=arr[i];
+                                                                      if((sum&1)==1) return false;
+                                                                      sum/=2;
+                                                                      
+                                                                      vector<vector<bool>> dp(n, vector<bool>(sum+1,0));
+                                                                      
+                                                                      for(int i=0;i<n;i++) dp[i][0] = true;
+                                                                      if(arr[0] <= sum) dp[0][arr[0]] = true;
+                                                                      
+                                                                      for(int i=1;i<n;i++)
+                                                                      {
+                                                                          for(int target=1;target<=sum;target++)
+                                                                          {
+                                                                              bool take = false;
+                                                                              if(arr[i] <= target)
+                                                                              take = dp[i-1][target-arr[i]];
+                                                                              
+                                                                              bool nottake = dp[i-1][target];
+                                                                              
+                                                                              dp[i][target] = take||nottake;
+                                                                          }
+                                                                          
+                                                                      }
+                                                                      return dp[n-1][sum];
+                                                                  }
