@@ -1,0 +1,45 @@
+Given an array arr of size n containing non-negative integers, the task is to divide it into two sets S1 and S2 such
+that the absolute difference between their sums is minimum and find the minimum difference
+
+Example 1:
+
+Input: N = 4, arr[] = {1, 6, 11, 5} 
+Output: 1
+Explanation: 
+Subset1 = {1, 5, 6}, sum of Subset1 = 12 
+Subset2 = {11}, sum of Subset2 = 11   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+int minDifference(int arr[], int n) 
+	{
+	    int sum = 0;
+	    for(int i=0;i<n;i++) sum+=arr[i];
+        vector<vector<bool>> dp(n, vector<bool>(sum+1,0));
+        
+        for(int i=0;i<n;i++) dp[i][0] = true;
+        if(arr[0] <= sum) dp[0][arr[0]] = true;
+        
+        for(int i=1;i<n;i++)
+        {
+            for(int target=1;target<=sum;target++)
+            {
+                bool take = false;
+                if(arr[i] <= target)
+                take = dp[i-1][target-arr[i]];
+                
+                bool nottake = dp[i-1][target];
+                
+                dp[i][target] = take||nottake;
+            }
+        }
+        
+        int mini = 1e9;
+        for(int s1=0;s1<=sum/2;s1++)
+        {
+            if(dp[n-1][s1] == true)
+            {
+                mini = min(mini, abs(sum-s1)-s1); 
+            }
+        }
+        return mini;
+	} 
