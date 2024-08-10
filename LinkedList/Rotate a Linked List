@@ -1,0 +1,42 @@
+Given the head of a singly linked list, the task is to rotate the linked list anti-clockwise by k nodes, i.e.,
+left-shift the linked list by k nodes, where k is a given positive integer smaller than or equal to length of the linked list.
+
+Examples:
+
+Input: linkedlist: 2->4->7->8->9 , k = 3
+Output: 8->9->2->4->7
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Node* rotate(Node* head, int k)
+    {
+        int count = 0;
+        Node *temp = head;
+        while(temp)
+        {
+            temp = temp->next;
+            count++;
+        }
+        if(count == k)
+        {
+            return head;
+        }
+        
+        Node *current = head;
+        for(int i=1;i<k;i++)
+        {
+            current = current->next;
+        }
+        Node *head1 = current->next;
+        current->next = NULL;
+        
+        Node *curr = head1;
+    
+    while(curr->next)
+    {
+        curr = curr->next;
+    }
+    curr->next = head;
+    return head1;
+    }
