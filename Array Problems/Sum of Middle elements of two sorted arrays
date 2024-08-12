@@ -1,0 +1,29 @@
+Given 2 sorted integer arrays arr1 and arr2 of the same size. Find the sum of the middle elements of two sorted arrays arr1 and arr2.
+
+Examples:
+
+Input: arr1 = [1, 2, 4, 6, 10], arr2 = [4, 5, 6, 9, 12]
+Output: 11
+Explanation: The merged array looks like [1, 2, 4, 4, 5, 6, 6, 9, 10, 12]. Sum of middle elements is 11 (5 + 6).
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+int SumofMiddleElements(vector<int> &arr1, vector<int> &arr2) {
+        vector<int>result;
+        for(int i=0;i<arr1.size();i++){
+            result.push_back(arr1[i]);
+        }
+        for(int i=0;i<arr2.size();i++){
+            result.push_back(arr2[i]);
+        }
+        sort(result.begin(),result.end());
+        int start=0;
+        int end=result.size()-1;
+        int mid = (start + end)/2;
+        int final_ans=0;
+        for(int i=mid;i<mid+1;i++){
+            final_ans +=(result[mid] + result[mid+1]);
+        }
+        return final_ans;
+    }
