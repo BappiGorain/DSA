@@ -1,0 +1,42 @@
+Given a string, find the minimum number of characters to be inserted to convert it to a palindrome.
+
+Examples :
+
+Input: str = "abcd"
+Output: 3
+Explanation: Inserted character marked with bold characters in dcbabcd, here we need minimum three characters to make it palindrome.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+int lcs(int n, int m, string str1, string str2)
+    {
+        vector<int> prev(m+1,0), cur(m+1,0);
+        
+        for(int j=0;j<=m;j++)
+        {
+            prev[j] = 0;
+        }
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                if(str1[i-1] == str2[j-1]) cur[j] =  1 + prev[j-1];
+                else cur[j] =  max(prev[j],cur[j-1]);
+            }
+            prev = cur;
+        }
+        
+        return cur[m];
+        
+    }
+    int longestPalinSubseq(string A)
+    {
+        int len = A.length();
+        string s2 = A;
+        reverse(s2.begin(),s2.end());
+        
+        return lcs(len,len,A,s2);
+        
+    }
+    int countMin(string str)
+    {
+        return str.size()-longestPalinSubseq(str);
+    }
