@@ -13,11 +13,7 @@ Explanation: The highlighted brackets in
 the given string (((()( are assigned
 the numbers as: 1 2 3 4 4 5
 
-
-
-
-
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 vector<int> bracketNumbers(string S)
     {
