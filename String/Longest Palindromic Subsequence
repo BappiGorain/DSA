@@ -1,0 +1,42 @@
+Given a String, find the longest palindromic subsequence.
+
+NOTE: Subsequence of a given sequence is a sequence that can be derived from the given sequence by deleting some or no elements without changing the order of the remaining elements
+
+Example 1:
+
+Input:
+S = "bbabcbcab"
+Output: 7
+Explanation: Subsequence "babcbab" is the
+longest subsequence which is also a palindrome.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+int lcs(int n, int m, string str1, string str2)
+    {
+        vector<int> prev(m+1,0), cur(m+1,0);
+        
+        for(int j=0;j<=m;j++)
+        {
+            prev[j] = 0;
+        }
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=m;j++)
+            {
+                if(str1[i-1] == str2[j-1]) cur[j] =  1 + prev[j-1];
+                else cur[j] =  max(prev[j],cur[j-1]);
+            }
+            prev = cur;
+        }
+        
+        return cur[m];
+        
+    }
+    int longestPalinSubseq(string A)
+    {
+        int len = A.length();
+        string s2 = A;
+        reverse(s2.begin(),s2.end());
+        
+        return lcs(len,len,A,s2);
+        
+    }
