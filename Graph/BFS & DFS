@@ -1,0 +1,73 @@
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+void bfs(int V,vector<int> adj[])
+{
+    vector<int> vis(V,0); 
+    queue<int> q;
+    q.push(0);
+    cout<< "BFS -> ";
+    while(!q.empty())
+    {
+        int s = q.front();
+        q.pop();
+        cout<< s << " ";
+        vis[s] = 1;
+
+        for(auto ele: adj[s])
+        {
+            if(vis[ele] != 1)
+            {
+                vis[ele] = 1;
+                q.push(ele);
+            }
+        }
+    }
+}
+
+void dfs(int s,vector<int> adj[],vector<int> &vis)
+{
+    cout<< s << " ";
+    vis[s] = 1;
+    for(auto it : adj[s])
+    {
+        if(vis[it] != 1)
+        {
+            vis[it] = 1;
+            dfs(it,adj,vis);
+        }
+    }
+}
+
+int main()
+{
+    cout<<"Enter number of Vertices: ";
+    int V;
+    cin>> V;
+
+    cout<<"Enter number of Edges: ";
+    int E;
+    cin>> E;
+
+    vector<int> adj[V];
+
+    cout<<"Enter " << E << " Edges: " << endl;
+
+    for(int i=0;i<E;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    
+    bfs(V,adj);
+    vector<int> vis(V,0);
+    cout<<endl;
+    cout<<"DFS -> ";
+    dfs(0,adj,vis);
+
+}
