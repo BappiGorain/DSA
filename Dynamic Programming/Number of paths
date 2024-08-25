@@ -1,0 +1,129 @@
+The problem is to count all the possible paths from top left to bottom right of an MxN matrix with the constraints that from each cell you can either move to right or down.
+
+Return answer modulo 109+7.
+
+Example 1:
+
+Input:
+M = 3 and N = 3
+Output: 6
+Explanation:
+Let the given input 3*3 matrix is filled 
+as such:
+A B C
+D E F
+G H I
+The possible paths which exists to reach 
+'I' from 'A' following above conditions 
+are as follows:ABCFI, ABEHI, ADGHI, ADEFI, 
+ADEHI, ABEFI
+Example 2:
+
+Input:
+M = 1 and N = 4
+Output: 1
+Explanation:
+There is only one direction to go in,
+and thus, there is only one path possible.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+                                                                      RECURSION
+                                                                  ----------------
+
+  
+                                                            int mod =1e9+7;
+                                                            long long solve(int M, int N)
+                                                            {
+                                                                if(M==0 and N == 0) return 1;
+                                                                if(M<0 or N < 0) return 0;
+                                                                
+                                                                long long up = solve(M-1,N);
+                                                                long long left = solve(M,N-1);
+                                                                return (up + left) % mod;
+                                                                
+                                                            }
+                                                            
+                                                            
+                                                            public:
+                                                            long long  numberOfPaths(int M, int N)
+                                                            {
+                                                                return solve(M-1,N-1);
+                                                            }
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+                                                                  TABULATION
+                                                                --------------
+
+
+                                                          
+                                                              int mod =1e9+7;
+                                                              public:
+                                                              long long  numberOfPaths(int M, int N)
+                                                              {
+                                                                  vector<vector<long long>> dp(M+1,vector<long long>(N+1,0));
+                                                                  
+                                                               
+                                                                  for(int i=0;i<M;i++)
+                                                                  {
+                                                                      for(int j=0;j<N;j++)
+                                                                      {
+                                                                          if(i == 0 and j == 0)
+                                                                          {
+                                                                              dp[i][j] = 1;
+                                                                              continue;
+                                                                          }
+                                                                          
+                                                                          long long up = 0;
+                                                                          if(i>0) up = dp[i-1][j];
+                                                                          long long left = 0;
+                                                                          if(j>0) left = dp[i][j-1];
+                                                                          
+                                                                          dp[i][j] = (up + left) % mod;
+                                                                      }
+                                                                  }
+                                                                  
+                                                                  return dp[M-1][N-1];
+                                                                  
+                                                              }
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+                                                                               SPACE OPTIMISATION
+                                                                             ----------------------
+
+
+                                                                            int mod =1e9+7;
+                                                                            public:
+                                                                            long long  numberOfPaths(int M, int N)
+                                                                            {
+                                                                                vector<long long> prev(N,0),curr(N,0);
+                                                                                
+                                                                                for(int i=0;i<M;i++)
+                                                                                {
+                                                                                    for(int j=0;j<N;j++)
+                                                                                    {
+                                                                                        if(i == 0 and j == 0)
+                                                                                        {
+                                                                                            curr[j] = 1;
+                                                                                            continue;
+                                                                                        }
+                                                                                        
+                                                                                        long long up = 0;
+                                                                                        if(i>0) up = prev[j];
+                                                                                        long long left = 0;
+                                                                                        if(j>0) left = curr[j-1];
+                                                                                        
+                                                                                        curr[j] = (up + left) % mod;
+                                                                                    }
+                                                                                    prev = curr;
+                                                                                }
+                                                                                
+                                                                                return prev[N-1];
+                                                                            }
