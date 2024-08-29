@@ -1,0 +1,89 @@
+There is an array arr of heights of stone and Geek is standing at the first stone and can jump to one of the following: Stone i+1, i+2, ... i+k stone,
+where k is the maximum number of steps that can be jumped and cost will be |hi-hj| is incurred, where j is the stone to land on.
+Find the minimum possible total cost incurred before the Geek reaches the last stone.
+
+Example:
+
+Input: k = 3, arr[]= [10, 30, 40, 50, 20]
+Output: 30
+Explanation: Geek will follow the path 1->2->5, the total cost would be | 10-30| + |30-20| = 30, which is minimum
+
+
+-----------------------------------------------------------------------------------RECURSION-----------------------------------------------------------------------------------
+
+ int solve(int i, vector<int>& arr, int& k)
+  {
+      if(i==0) return 0;
+      int minStep = INT_MAX;
+      for(int j=1;j<=k;j++)
+      {
+          int jump = 1e9;
+          if(i-j>=0) jump = solve(i-j,arr,k) + abs(arr[i]-arr[i-j]);
+          minStep = min(minStep,jump);
+      }
+      return minStep;
+      
+  }
+  
+  
+    int minimizeCost(vector<int>& arr, int& k)
+    {
+        
+        return solve(arr.size()-1,arr,k);
+    }
+
+
+
+-----------------------------------------------------------------------------------MEMORIZATION--------------------------------------------------------------------------------
+
+
+
+int solve(int i, vector<int>& arr, int& k,vector<int> &dp)
+  {
+      if(i==0) return 0;
+      if(dp[i] != -1) return dp[i];
+      int minStep = INT_MAX;
+      for(int j=1;j<=k;j++)
+      {
+          int jump = 1e9;
+          if(i-j>=0) jump = solve(i-j,arr,k,dp) + abs(arr[i]-arr[i-j]);
+          minStep = min(minStep,jump);
+      }
+      return dp[i] = minStep;
+  }
+  
+  
+    int minimizeCost(vector<int>& arr, int& k)
+    {
+        int n = arr.size();
+        vector<int> dp(n,-1);
+        return solve(n-1,arr,k,dp);
+    }
+
+
+
+-----------------------------------------------------------------------------------TABULATION----------------------------------------------------------------------------------
+
+int minimizeCost(vector<int>& arr, int& k)
+    {
+        int n = arr.size();
+        vector<int> dp(n,0);
+        
+        dp[0] = 0;
+        
+        for(int i=1;i<n;i++)
+        {
+            int minStep = INT_MAX;
+            for(int j=1;j<=k;j++)
+            {
+                  
+                if(i-j>=0)
+                {
+                    int jump = dp[i-j] + abs(arr[i]-arr[i-j]);
+                    minStep = min(minStep,jump);
+                }
+            }
+            dp[i] = minStep;
+        }
+        return dp[n-1];
+    }
