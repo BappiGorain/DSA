@@ -1,0 +1,80 @@
+Given a n x n matrix of positive integers. There are only three possible moves from a cell mat[r][c].
+
+mat[r+1] [c]
+mat[r+1] [c-1]
+mat [r+1] [c+1]
+Starting from any column in row 0 return the largest sum of any of the paths up to row n -1. Return the highest maximum path sum.
+
+Note : We can start from any column in zeroth row and can end at any column in (n-1)th row.
+
+Examples :
+
+Input: n = 2, mat = [[348, 391],[618, 193]]
+Output: 1009
+Explaination: The best path is 391 -> 618. It gives the sum = 1009.
+
+---------------------------------------------------------------------------------RECURSION-------------------------------------------------------------------------------------
+
+
+ int solve(int r,int c,vector<vector<int>> mat)
+    {
+        if(c < 0 or r >= mat.size()) return 0;
+        if(r==0)
+        {
+            return mat[0][c];
+        }
+        
+        
+        int lc =  mat[r][c] + solve(r-1,c-1,mat);
+        int up = mat[r][c] + solve(r-1,c,mat);
+        int rc = mat[r][c] + solve(r-1,c+1,mat);
+        
+        return max(lc,max(up,rc));
+        
+    }
+
+    int maximumPath(int N, vector<vector<int>> Matrix)
+    {
+        int maxi = 0;
+        for(int i=0;i<N;i++)
+        {
+            maxi = max(maxi,solve(N-1,i,Matrix));
+        }
+        return maxi;
+         
+    }
+
+-----------------------------------------------------------------------------------MEMORIZATION--------------------------------------------------------------------------------
+
+int solve(int r,int c,vector<vector<int>> mat,vector<vector<int>> &dp)
+    {
+        if(c < 0 or r >= mat.size()) return 0;
+        
+        if(r==0)
+        {
+            return mat[0][c];
+        }
+        
+        if(dp[r][c] != -1) return dp[r][c];
+        
+        
+        int lc =  mat[r][c] + solve(r-1,c-1,mat,dp);
+        int up = mat[r][c] + solve(r-1,c,mat,dp);
+        int rc = mat[r][c] + solve(r-1,c+1,mat,dp);
+        
+        return dp[r][c] = max(lc,max(up,rc));
+        
+    }
+
+    int maximumPath(int N, vector<vector<int>> Matrix)
+    {
+        int maxi = 0;
+        vector<vector<int>> dp(N,vector<int>(N,-1));
+        for(int i=0;i<N;i++)
+        {
+            maxi = max(maxi,solve(N-1,i,Matrix,dp));
+        }
+        return maxi;
+         
+    }
+
