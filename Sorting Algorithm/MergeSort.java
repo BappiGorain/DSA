@@ -1,4 +1,8 @@
+sort the array using Merge Sort technique 
 
+
+
+	
 public class MergeSort
 {
 	
