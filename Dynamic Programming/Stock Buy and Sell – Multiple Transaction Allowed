@@ -1,0 +1,80 @@
+The cost of stock on each day is given in an array price[] of size n. Each day you may decide to either buy or sell the stock i at price[i], you can even buy and sell the stock on the same day, Find the maximum profit which you can get.
+
+Note: Buying and Selling of the stock can be done multiple times, but you can only hold one stock at a time. In order to buy another stock, firstly you have to sell the current holding stock.
+
+Example 1:
+
+Input:
+n = 4
+price[] = {3, 4, 1, 5}
+Output:
+5
+Explanation:
+We can buy stock on day 1 (at price 3) and sell it on day 2 (at price 4) profit will be 4-3=1, 
+We can buy another stock on day 3 (at price 1) and sell it on day 4 (at price 5) profit will be 5-1=4, 
+which will give us maximum profit of 1+4=5.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ 
+  int solve(int ind, bool buy, int n, vector<int> &prices)
+  {
+      if(ind == n) return 0;
+      int profit = 0;
+      if(buy)
+      {
+          profit = max(-prices[ind] + solve(ind+1,false,n,prices),
+                         0 + solve(ind+1,true,n,prices));
+      }
+      else
+      {
+          profit = max(prices[ind] + solve(ind+1,true,n,prices),
+                        0 + solve(ind+1,false,n,prices));
+      }
+      return profit;
+  }
+  
+    int stockBuyAndSell(int n, vector<int> &prices)
+    {
+        return solve(0,true,n,prices);
+    }
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+ int solve(int ind, bool buy, int n, vector<int> &prices,vector<vector<int>> &dp)
+  {
+      if(ind == n) return 0;
+      if(dp[ind][buy] != -1) return dp[ind][buy];
+      int profit = 0;
+      if(buy)
+      {
+          profit = max(-prices[ind] + solve(ind+1,false,n,prices,dp),
+                         0 + solve(ind+1,true,n,prices,dp));
+      }
+      else
+      {
+          profit = max(prices[ind] + solve(ind+1,true,n,prices,dp),
+                        0 + solve(ind+1,false,n,prices,dp));
+      }
+      return dp[ind][buy] = profit;
+  }
+  
+    int stockBuyAndSell(int n, vector<int> &prices)
+    {
+        vector<vector<int>> dp(n,vector<int>(2,-1));
+        return solve(0,true,n,prices,dp);
+    }
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+int stockBuyAndSell(int n, vector<int> &prices) {
+        // code here
+          int profit = 0;
+        for(int i = 1; i < n; i++){
+            if(prices[i] > prices[i-1])
+                profit += prices[i] - prices[i-1];
+        }
+        return profit;
+    }
