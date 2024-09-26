@@ -1,0 +1,25 @@
+You are given the heights of consecutive buildings. You can move from the roof of a building to the roof of the next adjacent building. You need to find the maximum number of consecutive steps you can put forward such that you gain an increase in altitude with each step.
+
+Examples:
+
+Input: arr[] = [1, 2, 2, 3, 2]
+Output: 1
+Explanation: 1, 2, or 2, 3 are the only consecutive buildings with increasing heights thus maximum number of consecutive steps with an increase in gain in altitude would be 1 in both cases.
+
+
+
+int maxStep(vector<int>& arr) 
+    {
+        int count = 0;
+        int max = 0;
+        int n= arr.size();
+        
+        for(int i=0;i<n-1;i++)
+        {
+            if(arr[i] < arr[i+1]) count++;
+            else count = 0;
+            if(count>max) max = count;
+            
+        }
+        return max;
+    }
