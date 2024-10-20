@@ -1,0 +1,75 @@
+Given a binary tree with n nodes. Find the zig-zag level order traversal of the binary tree.
+In zig zag traversal starting from the first level go from left to right for odd-numbered levels and right to left for even-numbered levels.
+
+Example 1:
+
+Input:
+        1
+      /   \
+     2    3
+    / \    /   \
+   4   5 6   7
+Output:
+1 3 2 4 5 6 7
+Explanation:
+For level 1 going left to right, we get traversal as {1}.
+For level 2 going right to left, we get traversal as {3,2}.
+For level 3 going left to right, we get traversal as {4,5,6,7}.
+Merging all this traversals in single array we get {1,3,2,4,5,6,7}
+
+Example 2:
+
+Input:
+           7
+        /     \
+       9      7
+     /  \      /   
+    8   8   6     
+   /  \
+  10  9 
+Output:
+7 7 9 8 8 6 9 10 
+Explanation:
+For level 1 going left to right, we get traversal as {7}.
+For level 2 going right to left, we get traversal as {7,9}.
+For level 3 going left to right, we get traversal as {8,8,6}.
+For level 4 going right to left, we get traversal as {9,10}.
+Merging all this traversals in single array we get {7,7,9,8,8,6,9,10}.
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+vector <int> zigZagTraversal(Node* root)
+    {
+        queue<Node*>q;
+        vector<int>v;
+        q.push(root);
+        bool flag=false;
+        while(!q.empty())
+        {
+            int n=q.size();
+            int siz=v.size();
+            while(n--)
+            {
+                Node*curr=q.front();
+                q.pop();
+                v.push_back(curr->data);
+                if(curr->left)
+                {
+                    q.push(curr->left);
+                }
+                if(curr->right)
+                {
+                    q.push(curr->right);
+                }
+            }
+            if(flag)
+            {
+                reverse(v.begin()+siz,v.end());
+            }
+            flag=!flag;
+        }
+        
+        return v;
+    
+    }
