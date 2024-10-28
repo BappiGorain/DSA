@@ -1,0 +1,106 @@
+// Print all the paths in a tree
+
+
+
+#include<iostream>
+#include<queue>
+using namespace std;
+
+struct Node
+{
+    int data;
+    Node *left;
+    Node *right;
+
+    Node(int data)
+    {
+        this->data = data;
+        this->left = this->right = NULL;
+    }
+};
+
+
+void printAllPossiblePath(Node *root,vector<int> ds)
+{
+    if(root->left == NULL and root->right == NULL)
+    {
+        ds.push_back(root->data);
+        for(auto ele: ds)
+        {
+            cout<<ele<<" ";
+        }
+        cout<<endl;
+        return;
+    }
+    ds.push_back(root->data);
+    printAllPossiblePath(root->left,ds);
+    printAllPossiblePath(root->right,ds);
+    ds.pop_back();
+}
+
+
+Node* createTree()
+{
+    Node *root = NULL;
+    queue<Node*> q;
+    if (root == NULL)
+    {
+        cout<<"Enter root's Data : ";
+        int rootData;
+        cin>>rootData;
+        if(rootData != -1) 
+        {
+            root =  new Node(rootData);
+            q.push(root);
+        }
+    }
+
+    while(!q.empty())
+    {
+        Node *temp = q.front();
+        q.pop();
+        int leftData,rightData;
+        cout<<"Enter " << temp->data <<" left : ";
+        cin>>leftData;
+        if(leftData != -1)
+        {
+            temp->left = new Node(leftData);
+            q.push(temp->left);
+        }
+
+        cout<<"Enter " << temp->data <<" right : ";
+        cin>>rightData;
+        if(rightData != -1)
+        {
+            temp->right = new Node(rightData);
+            q.push(temp->right);
+        }
+    }
+    return root;
+}
+
+
+void levelOrder(Node *root)
+{
+    queue<Node *> q;
+    q.push(root);
+    while (!q.empty())  
+    {
+        root = q.front();
+        q.pop();
+        cout<<root->data <<" ";
+        if(root->left != NULL) q.push(root->left);
+        if(root->right != NULL) q.push(root->right);
+    }    
+}
+
+int main()
+{
+    Node *root = createTree();
+    cout<<endl;
+    levelOrder(root);
+    vector<int> ds;
+    cout<<endl;
+    printAllPossiblePath(root,ds);
+}
+
