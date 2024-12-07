@@ -1,0 +1,23 @@
+Given two integers a and b, the task is to find the sum of a and b without using + or – operators.
+
+Examples: 
+
+Input: a = 10, b = 30
+Output: 40
+
+
+Input: a = -1, b = 2
+Output: 1
+
+
+
+int add(int a, int b)
+{
+    while(b != 0)
+    {
+        int carry = (a & b) >> 1;
+        a = a ^ n;
+        b = carry;
+    }
+  return a;
+}
