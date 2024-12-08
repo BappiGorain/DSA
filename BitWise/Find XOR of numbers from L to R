@@ -1,0 +1,22 @@
+You are given two integers L and R, your task is to find the XOR of elements of the range [L, R].
+
+Input: 
+L = 4, R = 8 
+Output:
+8 
+Explanation:
+4 ^ 5 ^ 6 ^ 7 ^ 8 = 8
+
+
+
+int first_till_last(int n)
+  {
+      if(n % 4 == 1) return 1;
+      else if(n % 4 == 2) return n+1;
+      else if(n % 4 == 3) return 0;
+      else return n;
+  }
+  int findXOR(int l, int r) 
+  {
+      return first_till_last(l-1) ^ first_till_last(r);
+  }
