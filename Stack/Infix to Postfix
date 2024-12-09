@@ -1,0 +1,67 @@
+Given an infix expression in the form of string s. Convert this infix expression to postfix expression.
+
+Infix expression: The expression of the form a op b. When an operator is in-between every pair of operands.
+Postfix expression: The expression of the form a b op. When an operator is followed for every pair of operands.
+Note: The order of precedence is: ^ greater than * equals to / greater than + equals to -. Ignore the right associativity of ^.
+Examples :
+
+Input: s = "a+b*(c^d-e)^(f+g*h)-i"
+Output: abcd^e-fgh*+^*+i-
+Explanation: After converting the infix expression into postfix expression, the resultant expression will be abcd^e-fgh*+^*+i-
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+int priority(char ch)
+    {
+        if(ch == '^') return 3;
+        else if((ch == '*') or (ch == '/')) return 2;
+        else if((ch == '+') or (ch == '-')) return 1;
+        else return 0;
+    }
+    string infixToPostfix(string s) 
+    {
+        int i=0;
+        stack<char> st;
+        string ans = "";
+        
+        while(i<s.size())
+        {
+            
+            if((s[i]>='A' and s[i]<='Z') or 
+            (s[i]>='a' and s[i]<='z') or
+            (s[i]>='0' and s[i]<='9'))
+            {
+                ans+=s[i];
+            }
+            else if(s[i]=='(')
+            {
+                st.push(s[i]);
+            }
+            else if(s[i] == ')')
+            {
+                while(st.top() != '(')
+                {
+                    ans+=st.top();
+                    st.pop();
+                }
+                st.pop();
+            }
+            else
+            {
+                while (!st.empty() && priority(st.top()) >= priority(s[i])) 
+                {
+                    ans += st.top();
+                    st.pop();
+                }
+                st.push(s[i]);
+            }
+            i++;
+        }
+        
+        while(!st.empty())
+        {
+            ans+=st.top();
+            st.pop();
+        }
+        return ans;
+    }
