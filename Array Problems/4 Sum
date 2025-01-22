@@ -1,0 +1,43 @@
+Given an array arr[] of integers and another integer target. Find all unique quadruples from the given array that sums up to target.
+
+Note: All the quadruples should be internally sorted, ie for any quadruple [q1, q2, q3, q4] it should be : q1 <= q2 <= q3 <= q4.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+vector<vector<int> > fourSum(vector<int> &arr, int target) {
+         vector<vector<int>> ans;
+    sort(arr.begin(), arr.end());
+    int n = arr.size();
+
+    for (int i = 0; i < n; i++) {
+        if (i > 0 && arr[i] == arr[i - 1]) continue; // Skip duplicates for i
+
+        for (int j = i + 1; j < n; j++) {
+            if (j > i + 1 && arr[j] == arr[j - 1]) continue; // Skip duplicates for j
+
+            int f = j + 1;
+            int l = n - 1;
+
+            while (f < l) {
+                int sum = arr[i] + arr[j] + arr[f] + arr[l];
+
+                if (sum == target) {
+                    ans.push_back({arr[i], arr[j], arr[f], arr[l]});
+
+                    // Skip duplicates for f and l
+                    while (f < l && arr[f] == arr[f + 1]) f++;
+                    while (f < l && arr[l] == arr[l - 1]) l--;
+
+                    f++;
+                    l--;
+                } else if (sum < target) {
+                    f++;
+                } else {
+                    l--;
+                }
+            }
+        }
+    }
+
+    return ans;
+    }
