@@ -1,0 +1,30 @@
+Given an unsorted array arr of positive integers. One number a from the set [1, 2,....,n] is missing and one number b occurs twice in the array. Find numbers a and b.
+
+Note: The test cases are generated such that there always exists one missing and one repeating number within the range [1,n].
+
+
+vector<int> findTwoElement(vector<int>& arr)
+    {
+        int n = arr.size();
+        long long SN = (n * (n + 1)) / 2;
+        long long SN2 = (n * (n + 1) * (2 * n + 1)) / 6;
+        
+        long long s = 0;
+        long long s2 = 0;
+        
+        for(int i=0;i<n;i++)
+        {
+            s += arr[i];
+            s2 += (long long)arr[i] * (long long)arr[i];
+        }
+        
+        long long val1 = s - SN;   
+        long long val2 = s2 - SN2;
+        val2 = val2 / val1;   // S + SN
+        
+        
+        long long x = (val1 + val2) / 2;
+        long long y = (x - val1);
+        
+        return {(int)x,(int)y;
+    }
