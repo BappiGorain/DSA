@@ -12,21 +12,21 @@ Explanation: There are three trains during the time 9:40 to 12:00. So we need a 
 int findPlatform(vector<int>& arr, vector<int>& dep)
     {
         int n = arr.size();
-        int c = 1;
+        int max_platform_required = 1;
         sort(arr.begin(),arr.end());
         sort(dep.begin(),dep.end());
-        int j = 0;
+        int previous_train = 0;
         
-        for(int i=1;i<n;i++)
+        for(int current_train=1;current_train<n;current_train++)
         {
-            if(arr[i] > dep[j])
+            if(arr[current_train] > dep[previous_train])
             {
-                j++;
+                previous_train++;
             }
             else
             {
-                c++;
+                max_platform_required++;
             }
         }
-        return c;
+        return max_platform_required;
     }
