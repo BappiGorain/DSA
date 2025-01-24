@@ -1,0 +1,54 @@
+
+
+
+Given an integer array arr, return all the unique pairs [arr[i], arr[j]] such that i != j and arr[i] + arr[j] == 0.
+
+Note: The pairs must be returned in sorted order, the solution array should also be sorted, and the answer must not contain any duplicate pairs.
+
+Examples:
+
+Input: arr = [-1, 0, 1, 2, -1, -4]
+Output: [[-1, 1]]
+Explanation: arr[0] + arr[2] = (-1)+ 1 = 0.
+arr[2] + arr[4] = 1 + (-1) = 0.
+The distinct pair are [-1,1].
+
+
+
+
+vector<vector<int>> getPairs(vector<int>& arr)
+    {
+        int n = arr.size();
+        
+        unordered_map<int,int> um;
+        vector<vector<int>> ans;
+        
+        for(int i=0;i<n;i++)
+        {
+            um[arr[i]]++;
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            int req = -arr[i];
+            if(um.find(req) != um.end() and um[arr[i]] != 0)
+            {
+                if(arr[i] == 0)
+                {
+                    if(um[arr[i]] >= 2)
+                    {
+                        ans.push_back({0,0});
+                        um[arr[i]] = 0;
+                    }
+                }
+                else if(req<arr[i]) ans.push_back({req,arr[i]});
+                else ans.push_back({arr[i],req});
+                um[arr[i]] = 0;
+                um[req] = 0;
+            }
+        }
+        
+        sort(ans.begin(),ans.end());
+        
+        return ans;
+    }
