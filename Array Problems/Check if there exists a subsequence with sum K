@@ -1,0 +1,27 @@
+Given an array nums and an integer k. R﻿eturn true if there exist subsequences such that the sum of all elements in subsequences is equal to k else false.
+
+
+Examples:
+Input : nums = [1, 2, 3, 4, 5] , k = 8
+
+Output : Yes
+
+Explanation : The subsequences like [1, 2, 5] , [1, 3, 4] , [3, 5] sum up to 8.
+
+
+
+bool solve(int i,vector<int> &nums,int sum)
+    {
+        if(sum == 0) return true;
+        if(i>=nums.size() or sum < 0) return false;
+
+        bool not_pick = solve(i+1,nums,sum);
+        bool pick = solve(i+1,nums,sum-nums[i]);
+
+        return not_pick or pick;
+
+    }
+    bool checkSubsequenceSum(vector<int>& nums, int k) 
+    {
+        return solve(0,nums,k);
+    }
