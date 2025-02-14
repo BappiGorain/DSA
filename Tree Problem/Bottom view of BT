@@ -1,0 +1,44 @@
+Given root of binary tree, return the bottom view of the binary tree.
+
+The bottom view of a binary tree is the set of nodes visible when the tree is viewed from the bottom.
+Return nodes from the leftmost node to the rightmost node. Also if 2 nodes are outside the shadow
+of the tree and are at the same position then consider the node that appears later in level traversal.
+
+Examples:
+Input : root = [20, 8, 22, 5, 3, null, 25, null, null, 10 ,14]
+Output : [5, 10, 3, 14, 25]
+
+
+
+
+vector <int> bottomView(TreeNode *root)
+    {
+    	queue<pair<TreeNode*,int>> q;
+        vector<int> ans;
+        map<int,int> mpp;
+        q.push({root,0});
+        while(!q.empty())
+        {
+            root = q.front().first;
+            int level = q.front().second;
+            q.pop();
+
+            mpp[level] = root->data;
+            
+            if(root->left)
+            {
+                q.push({root->left,level+1});
+            }
+            if(root->right)
+            {
+                q.push({root->right,level-1});
+            }
+        }
+
+        for(auto x: mpp)
+        {
+            ans.push_back(x.second);
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
