@@ -1,0 +1,66 @@
+An image is represented by a 2-D array of integers, each integer representing the pixel value of the image. Given a coordinate (sr, sc) 
+representing the starting pixel (row and column) of the flood fill, and a pixel value newColor, "flood fill" the image.
+
+To perform a flood fill, consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel of the same colour as
+the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same colour as the starting pixel), and so on. 
+Replace the colour of all of the aforementioned pixels with the newColor.
+
+Input: image = [ [1, 1, 1], [1, 1, 0], [1, 0, 1] ], sr = 1, sc = 1, newColor = 2
+
+Output: [ [2, 2, 2], [2, 2, 0], [2, 0, 1] ]
+
+Explanation: From the center of the image with position (sr, sc) = (1, 1) (i.e., the red pixel),
+all pixels connected by a path of the same color as the starting pixel (i.e., the blue pixels) are colored with the new color.
+
+Note the bottom corner is not colored 2, because it is not 4-directionally connected to the starting pixel.
+
+
+
+
+
+vector<vector<int>> floodFill(vector<vector<int>> &image,
+                                  int sr, int sc, int newColor)
+    {
+        int m = image.size();
+        int n = image[0].size();
+        vector<vector<int>> vis(m,vector<int> (n,0));
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                vis[i][j] = image[i][j];
+            }
+        }
+
+        int originalColor = image[sr][sc];
+
+        queue<pair<int,int>> q;
+        q.push({sr,sc}); 
+        vis[sr][sc]  = newColor;
+
+        while(!q.empty())
+        {
+            sr = q.front().first;
+            sc = q.front().second;
+            q.pop();
+            vis[sr][sc] = newColor;
+            
+            int rowArr[] = {-1,0,+1,0};
+            int colArr[] = {0,+1,0,-1};
+
+            for(int i=0;i<4;i++)
+            {
+                int newRow = sr + rowArr[i];
+                int newCol = sc + colArr[i];
+                
+                if(newRow >= 0 and newCol >= 0 and newRow < m and
+                   newCol < n and image[newRow][newCol] == originalColor and
+                   vis[newRow][newCol] != newColor)
+                {
+                    vis[newRow][newCol] = newColor;
+                    q.push({newRow,newCol});
+                }               
+            }
+        }
+        return vis;
+    }
