@@ -1,0 +1,82 @@
+Given a grid of size N x M (N is the number of rows and M is the number of columns in the grid) consisting of '0's (Water) and ‘1's(Land). Find the number of islands.
+
+Input: grid = [ ["1", "1", "1", "0", "1"], ["1", "0", "0", "0", "0"], ["1", "1", "1", "0", "1"], ["0", "0", "0", "1", "1"] ]
+
+Output: 2
+
+Explanation: This grid contains 2 islands. Each '1' represents a piece of land, and the islands are formed by connecting adjacent lands horizontally or vertically.
+Despite some islands having a common edge, they are considered separate islands because there is no land connectivity in any of the eight directions between them.
+Therefore, the grid contains 2 islands.
+
+
+
+
+
+
+
+void bfs(pair<int,int> p,vector<vector<char>> &grid,
+                vector<vector<int>> &vis)
+        {
+            int m = grid.size();
+            int n = grid[0].size();
+
+            queue<pair<int,int>> q;
+            q.push(p);
+
+            while(!q.empty())
+            {
+                int row = q.front().first;
+                int col = q.front().second;
+                q.pop();
+
+                for(int i=-1;i<=1;i++)
+                {
+                    for(int j=-1;j<=1;j++)
+                    {
+                        int newRow = row+i;
+                        int newCol = col+j;
+
+                        if(newRow >=0 and newCol >=0 and 
+                            newRow<m and newCol<n and
+                            grid[newRow][newCol] == '1' and
+                            vis[newRow][newCol] == 0)
+                            {
+                                vis[newRow][newCol] = 1;
+                                q.push({newRow,newCol});
+                            }
+                    }
+                }
+            }
+        }
+
+
+public:
+    int numIslands(vector<vector<char>> &grid)
+    {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        vector<vector<int>> vis(m,vector<int>(n,0));
+        int count = 0;
+
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(vis[i][j] == 0 and grid[i][j] == '1')
+                {
+                    pair<int,int> p = {i,j};
+                    count++;
+                    bfs(p,grid,vis);
+                }
+            }
+        }
+        return count;
+    }
+
+
+
+
+
+
+
