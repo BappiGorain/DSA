@@ -1,0 +1,80 @@
+Given an n x m grid, where each cell has the following values : 
+
+2 - represents a rotten orange
+1 - represents a Fresh orange
+0 - represents an Empty Cell
+
+Every minute, if a fresh orange is adjacent to a rotten orange in 4-direction ( upward, downwards, right, and left ) it becomes rotten. 
+Return the minimum number of minutes required such that none of the cells has a Fresh Orange. If it's not possible, return -1.
+
+
+Examples:
+Input: grid = [ [2, 1, 1] , [0, 1, 1] , [1, 0, 1] ]
+Output: -1
+Explanation: Orange at (3,0) cannot be rotten.
+
+Input: grid = [[0,1,2],[0,1,2],[2,1,1]]
+Output: 1
+
+Input: grid = [ [2,1,1] , [1,1,0] , [0,1,1] ] 
+Output: 4
+
+
+
+int orangesRotting(vector<vector<int>> &grid)
+    {
+        int time = 0;
+        int m = grid.size();
+        int n = grid[0].size();
+
+        queue<pair<int,int>> q;
+
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j] == 2)
+                {
+                    q.push({i,j});
+                }
+            }
+        }
+
+        while(!q.empty())
+        {
+            time++;
+            int len = q.size();
+            for(int j=0;j<len;j++)
+            {
+                int row = q.front().first;
+                int col = q.front().second;
+                q.pop();
+                int rowArr[] = {-1,0,+1,0};
+                int colArr[] = {0,+1,0,-1};
+                for(int i=0;i<4;i++)
+                {
+                    int newRow = row + rowArr[i];
+                    int newCol = col + colArr[i];
+
+                    if(newRow>=0 and newRow<m and newCol>=0 and 
+                    newCol<n and grid[newRow][newCol]==1)
+                    {
+                        q.push({newRow,newCol});
+                        grid[newRow][newCol]=2;
+                    }
+                }
+            }
+        }
+
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j] == 1)
+                {
+                    return -1;
+                }
+            }
+        }
+        return time-1;
+    }
