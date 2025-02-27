@@ -1,0 +1,65 @@
+Given an N x M binary matrix grid, where 0 represents a sea cell and 1 represents a land cell.
+A move consists of walking from one land cell to another adjacent (4-directionally) land cell
+or walking off the boundary of the grid. Find the number of land cells in the grid for which
+we cannot walk off the boundary of the grid in any number of moves.
+
+Input: grid = [[0, 0, 0, 1], [0, 1, 1, 0], [0, 1, 1, 0], [0, 0, 0, 0]]
+Output:4
+
+Input: grid = [[0, 0, 0, 1],[0, 0, 0, 1], [0, 1, 1, 0], [0, 0, 1, 0], [0, 0, 0, 0]]
+Output:3
+
+int numberOfEnclaves(vector<vector<int>> &grid)
+    {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        queue<pair<int,int>> q;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(i==0 or i==m-1 or j==0 or j==n-1)
+                {
+                    if(grid[i][j]==1)
+                    {
+                        q.push({i,j});
+                        grid[i][j]=0;
+                    }
+                }
+            }
+        }
+
+
+        while(!q.empty())
+        {
+            int row = q.front().first;
+            int col = q.front().second;
+            q.pop();
+            int rowArr[] = {-1,0,+1,0};
+            int colArr[] = {0,+1,0,-1};
+            for(int i=0;i<4;i++)
+            {
+                int newRow = row + rowArr[i];
+                int newCol = col + colArr[i];
+
+                if(newRow>=0 and newRow<m and newCol>=0 and 
+                   newCol<n and grid[newRow][newCol]==1)
+                {
+                    q.push({newRow,newCol});
+                    grid[newRow][newCol]=0;
+                }
+            }
+        }
+
+        int count = 0;
+
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(grid[i][j] == 1) count++;
+            }
+        }
+        return count;
+    }
