@@ -1,0 +1,51 @@
+Given an undirected graph with V vertices labeled from 0 to V-1. The graph is represented using an adjacency list
+where adj[i] lists all nodes connected to node. Determine if the graph is bipartite or not.
+
+A graph is bipartite if the nodes can be partitioned into two independent sets A and B 
+such that every edge in the graph connects a node in set A and a node in set B.
+
+
+
+bool check(int start,vector<int> adj[],vector<int> &color,vector<bool> &vis)
+    {
+        queue<int> q;
+        q.push(start);
+        color[start] = 1;
+        vis[start] = true;
+        while(!q.empty())
+        {
+            int node = q.front();
+            q.pop();
+
+            for(auto ele : adj[node])
+            {
+                if(vis[ele] == false)
+                {
+                    vis[ele] = true;
+                    q.push(ele);
+                    color[ele] = (color[node] == 1) ? 2 : 1;
+                }
+                else
+                {
+                    if(color[node] == color[ele]) return false;
+                }
+            }
+        }
+        return true;
+    }
+    bool isBipartite(int V, vector<int> adj[])  {
+        vector<int> color(V,0);
+        vector<bool> vis(V,false);
+
+        for(int startNode = 0;startNode<V;startNode++)
+        {
+            if(vis[startNode] == false)
+            {
+                if(check(startNode,adj,color,vis) == false)
+                {
+                    return false;
+                }
+            }
+        }        
+        return true;
+    }
