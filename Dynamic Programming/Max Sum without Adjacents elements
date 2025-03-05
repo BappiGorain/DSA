@@ -1,0 +1,99 @@
+Given an array arr containing positive integers. Find the maximum sum of any possible subsequence such that no two numbers in the subsequence should be adjacent in array arr.
+
+Examples:
+
+Input: arr[] = [5, 5, 10, 100, 10, 5]
+Output: 110
+Explanation: If you take indices 0, 3 and 5, then = 5+100+5 = 110.
+Input: arr[] = [3, 2, 7, 10]
+Output: 13
+Explanation: 3 and 10 forms a non continuous subsequence with maximum sum.
+
+
+-----------------------------------------------------------------------------------------------------------
+
+private:
+    int solve(int i, vector<int> &arr)
+    {
+        if(i==0) return arr[0];
+        if(i==-1) return 0;
+        
+        int take = solve(i-2,arr) + arr[i];
+        int notTake = solve(i-1,arr) + 0;
+        return max(take,notTake);
+    }
+    
+    
+  public:
+    // calculate the maximum sum with out adjacent
+    int findMaxSum(vector<int>& arr)
+    {
+        int n = arr.size();
+        return solve(n-1,arr);
+    }
+---------------------------------------------------------------------------------------------------------
+
+private:
+    int solve(int i, vector<int> &arr,vector<int> &dp)
+    {
+        if(dp[i] != -1) return dp[i];
+        if(i==0) return arr[0];
+        if(i<0) return 0;
+        
+        int take = solve(i-2,arr,dp) + arr[i];
+        int notTake = solve(i-1,arr,dp) + 0;
+        return dp[i] = max(take,notTake);
+    }
+    
+    
+  public:
+    // calculate the maximum sum with out adjacent
+    int findMaxSum(vector<int>& arr)
+    {
+        int n = arr.size();
+        vector<int> dp(n,-1);
+        return solve(n-1,arr,dp);
+    }
+
+---------------------------------------------------------------------------------------------------
+
+
+int findMaxSum(vector<int>& arr)
+    {
+        int n = arr.size();
+        vector<int> dp(n,0);
+        dp[0] = arr[0];
+        
+        for(int i=1;i<n;i++)
+        {
+            int take = arr[i];
+            if(i>1)
+                take = dp[i-2] + arr[i];
+            int notTake = dp[i-1] + 0;
+            dp[i] = max(take,notTake);
+        }
+        return dp[n-1];
+    }
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+int findMaxSum(vector<int>& arr)
+    {
+        int n = arr.size();
+        vector<int> dp(n,0);
+        int prev1 = arr[0], prev2 = 0;
+        
+        for(int i=1;i<n;i++)
+        {
+            int take = arr[i];
+            if(i>1)
+                take = prev2 + arr[i];
+            int notTake = prev1 + 0;
+            int curr = max(take,notTake);
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        return prev1;
+    }
