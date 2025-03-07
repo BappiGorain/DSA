@@ -27,3 +27,28 @@ private:
     {
         return solve(a-1,b-1);
     }
+
+
+
+private:
+    int solve(int a, int b,vector<vector<int>> &dp)
+    {
+        if( a == 0 or b == 0) return 1;
+        
+        if(dp[a][b] != -1) return dp[a][b];
+        
+        int up = solve(a-1,b,dp);
+        
+        int left = solve(a,b-1,dp);
+        
+        return dp[a][b] = up + left;
+    }
+    
+    
+    public:
+    int NumberOfPath(int a, int b)
+    {
+        vector<vector<int>> dp(a, vector<int>(b, -1));
+        
+        return solve(a-1,b-1,dp);
+    }
