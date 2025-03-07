@@ -1,0 +1,29 @@
+Given a A X B matrix with your initial position at the top-left cell, find the number of possible unique paths to reach
+the bottom-right cell of the matrix from the initial position.
+
+Note: Possible moves can be either down or right at any point in time, i.e., we can move to matrix[i+1][j] or matrix[i][j+1] from matrix[i][j].
+
+Example 1:
+
+Input:
+A = 2, B = 2
+Output: 2
+Explanation: There are only two unique
+paths to reach the end of the matrix of
+size two from the starting cell of the
+matrix.
+
+
+private:
+    int solve(int a, int b)
+    {
+        if( a == 0 or b == 0) return 1;
+        int up = solve(a-1,b);
+        int left = solve(a,b-1);
+        return up + left;
+    }
+    public:
+    int NumberOfPath(int a, int b)
+    {
+        return solve(a-1,b-1);
+    }
