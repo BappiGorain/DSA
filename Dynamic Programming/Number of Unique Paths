@@ -81,3 +81,38 @@ int NumberOfPath(int a, int b)
         }
         return dp[a-1][b-1];
     }
+
+
+
+
+
+ public:
+    int NumberOfPath(int a, int b)
+    {
+        vector<int> prev(b,0);
+        
+        int prev2=0,prev1=0;
+        
+        for(int i=0;i<a;i++)
+        {
+            vector<int> temp(b,0);
+            for(int j=0;j<b;j++)
+            {
+                if(i==0 and j==0)
+                {
+                    temp[0] = 1;
+                    continue;
+                }
+                int up = 0;
+                int left = 0;
+                if(i>0)
+                    up = prev[j];
+                if(j>0)
+                    left = temp[j-1];
+                
+                temp[j] = up + left;
+            }
+            prev = temp;
+        }
+        return prev[b-1];
+    }
