@@ -3,7 +3,7 @@ You need to add 1 to the number formed by concatinating all the list node number
 
 Note: The head represents the first element of the given array.
 
--------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
 
 Node *reverse(Node *root){
 if(root==NULL || root->next==NULL)return root;
