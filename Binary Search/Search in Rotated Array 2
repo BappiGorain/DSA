@@ -1,0 +1,57 @@
+Given a sorted and rotated array arr and a target key k which is rotated at some point, and may contain duplicates and given an element key. Check whether the key is present in the array or not.
+
+Examples:
+
+Input: arr[] = [2, 5, 6, 0, 0, 1, 2], k = 0
+Output: true
+Explanation: 0 is found at index 3.
+Input: arr[] = [2, 5, 6, 0, 0, 1, 2], k = 3
+Output: false
+Explanation: There is no element that has value 3.
+Expected Time Complexity: O(logn)
+Expected Auxilary Space: O(1)
+
+
+bool Search(vector<int>& arr, int k) {
+        
+        int n = arr.size();
+        int low = 0;
+        int high = n-1;
+        
+        while(low <= high)
+        {
+            int mid = (low + high) / 2;
+            
+            if(arr[mid] == k) return true;
+            
+            if(arr[mid] == arr[low] and arr[mid] == arr[high])
+            {
+                low = low + 1;
+                high = high - 1;
+            }
+            
+            if(arr[low] <= arr[mid])   // left part is sorted
+            {
+                if(arr[low] <= k and arr[mid] >= k)
+                {
+                    high = mid - 1;
+                }
+                else
+                {
+                    low = mid + 1;
+                }
+            }
+            else   // right part is sorted
+            {
+                if(arr[mid] <= k and arr[high] >= k)
+                {
+                    high = mid + 1;
+                }
+                else
+                {
+                    low = mid - 1;
+                }
+            }
+        }
+        return false;
+    }
