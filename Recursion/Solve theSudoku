@@ -1,0 +1,97 @@
+Given an incomplete Sudoku configuration in terms of a 9x9  2-D interger square matrix, mat[][], the task is to solve the Sudoku. It is guaranteed that the input Sudoku will have exactly one solution.
+
+A sudoku solution must satisfy all of the following rules:
+
+Each of the digits 1-9 must occur exactly once in each row.
+Each of the digits 1-9 must occur exactly once in each column.
+Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+Note: Zeros represent blanks to be filled with numbers 1-9, while non-zero cells are fixed and cannot be changed.
+
+Examples:
+
+Input: mat[][] = 
+
+Output:
+
+Explanation: Each row, column and 3 x 3 box of the output matrix contains unique numbers.
+Input: mat[][] = 
+
+Output:
+
+Explanation: Each row, column and 3 x 3 box of the output matrix contains unique numbers.
+Constraints:
+mat.size() = 9
+mat[i].size() = 9
+0 ≤ mat[i][j] ≤ 9
+
+
+
+class Solution {
+  public:
+    // Function to find a solved Sudoku.
+    void solveSudoku(vector<vector<int>> &mat) {
+        
+        solve(mat);
+    }
+    
+    bool solve(vector<vector<int>> &mat)
+    {
+        for(int row=0;row<9;row++)
+        {
+            for(int col=0;col<9;col++)
+            {
+                if(mat[row][col]==0)
+                {
+                    for(int num=1;num<=9;num++)
+                    {
+                        if(isValid(mat,num,row,col) == true)
+                        {
+                            mat[row][col] = num;
+                            
+                            if(solve(mat)==true) 
+                                return true;
+                            else
+                                mat[row][col] = 0;
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    bool isValid(vector<vector<int>> &mat,int num, int row, int col)
+    {
+        for(int i=0;i<9;i++)
+        {
+            if(mat[row][i]==num) return false;  // check entire row
+            if(mat[i][col]==num) return false;  // check entire col
+            // if(mat[3*(row/3)+i/3][3*(col/3)+i%3]==num) return false; // check entire 3*3 matrix
+        }
+        
+        
+        // check entire matrix
+        
+        int startRow = (row / 3) * 3;
+        int endRow = startRow + 2;
+        int startCol = (col/3)*3;
+        int endCol = startCol + 2;
+        
+        for(int i=startRow;i<=endRow;i++)
+        {
+            for(int j=startCol;j<=endCol;j++)
+            {
+                if(mat[i][j] == num) return false;
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        return true;
+    }
+};          
