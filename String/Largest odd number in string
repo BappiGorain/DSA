@@ -1,0 +1,36 @@
+Given a string S, representing a large integer. Return the largest-valued odd integer (as a string) that is substring of the given string S.
+
+Note: A substring is a contiguous sequence of characters within a string. A null string ("") is also a substring.
+
+Example 1:
+
+Input: s = "504"
+Output: "5"
+Explanation: The only subtring "5" is odd number.
+ 
+Example 2:
+
+Input: s = "2042"
+Output: ""
+Explanation: All the possible non-empty substring have even value.
+ 
+
+Your Task:
+You don't need to read input or print anything. Your task is to complete the function maxOdd() which takes the string S as input and returns the largest-valued odd integer that is substring of the given string.
+
+
+
+
+String maxOdd(String s) 
+    {
+        int n = s.length();
+        int i=n-1;
+        for(;i>=0;i--)
+        {
+            int num = s.charAt(i) - '0';
+            if((num%2) == 1) return s.substring(0,i+1);
+        }
+        return "";
+        
+    }
+
