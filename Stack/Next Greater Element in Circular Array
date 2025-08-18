@@ -48,3 +48,42 @@ public ArrayList<Integer> nextLargerElement(int[] arr)
         
         return ans;
     }
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
+ public ArrayList<Integer> nextLargerElement(int[] arr)
+    {
+        int n = arr.length;
+        ArrayList<Integer> ans = new ArrayList<>(Collections.nCopies(n, -1));
+        Stack<Integer> st = new Stack();
+        
+        for(int i=2*n-1;i>=0;i--)
+        {
+            int index = i % n;
+            int nextGreater = -1;
+            while(!st.isEmpty())
+            {
+                int top = st.peek();
+                if(top <= arr[index])
+                {
+                    st.pop();
+                }
+                else
+                {
+                    nextGreater = st.peek();
+                    break;
+                }
+            }
+            st.push(arr[index]);
+            
+            if(i<n)
+            {
+                ans.set(i,nextGreater);
+            }
+        }
+        return ans;
+    }
